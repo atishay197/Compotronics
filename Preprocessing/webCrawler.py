@@ -11,6 +11,29 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 
+urls = open("urls.txt","r+a")
+
+def printReport(start,companyDone,phonesDone,totalPhones,totalCompanies):
+	elapsedTime = int((time.time() - start))
+	m, s = divmod(elapsedTime, 60)
+	h, m = divmod(m, 60)
+	percentCompanies = 100*companiesDone/totalCompanies
+	percentPhones = 100*phonesDone/totalPhones
+	timeLeft = totalPhones * elapsedTime/phonesDone
+	timeLeft -= elapsedTime
+	print "\t\t\t FINAL REPORT : "
+	print "\n\n#####################################################################\n"
+	print "\tTotal Elapsed Time : %d:%02d:%02d" % (h, m, s)
+	print "\n\tCompanies Done : " + companiesDone
+	print "\n\tPhones Done" + phonesDone
+	print "\n\tPercent Companies Done" + percentCompanies + " %"
+	print "\n\tPercent Phones Done" + percentPhones + " %"
+	m, s = divmod(timeLeft, 60)
+	h, m = divmod(m, 60)
+	print "\n\tEstimated Time left : %d:%02d:%02d" % (h, m, s)
+	print "\n#####################################################################\n"	
+
+
 # display all .csv files that are present in the current directory
 myPath = os.path.realpath(__file__)
 myPath = myPath[:-11]
@@ -54,37 +77,21 @@ for CompanyLink in allCompanyLink:
 	try:
 		print "Going to company phone page"
 		element = WebDriverWait(driver, 10).until(EC.title_contains("All"))
-		time.sleep(3)
+		time.sleep(10)
 	finally:
 		phoneList = driver.find_elements_by_css_selector(".makers a")
-		print len(phoneList)
-		phoneLinkList = list()	
+		phonesDone = len(phoneList)
 		for phone in phoneList:
 			print "phone : " + phone.text
 			phoneLink = phone.get_attribute("href")
 			print phoneLink
-			phoneLinkList.append(phoneLink)
-		for phoneLink in phoneLinkList:
-			driver.get(phoneLink)
-			time.sleep(5)
-			phoneName = driver.find_element_by_class_name("specs-phone-name-title")
-			print phoneName.text
-			specDiv = driver.find_element_by_id("specs-list")
-			tableList = specDiv.find_elements_by_xpath("//table")
-			for individualTable in tableList:
-				tableHeader = individualTable.find_element_by_xpath("//th")
-				print "~ " + tableHeader.text + " ~"
-				divisionList = individualTable.find_elements_by_xpath("//tr")
-				for inDiv in divisionList:
-					title = inDiv.find_element_by_class_name("ttl")
-					details = inDiv.find_element_by_class_name("nfo")
-					print "& " + title.text + " # " + details.text + " &"
-
-
-
+			urls.write("phoneLink")
+			urls.write("\n")
 		try:
 			driver.find_element_by_class_name("pages-next").click()
 		except NoSuchElementException:
 			print "No next page"
 		except Exception:
 			print "Some Other exception occoured"
+	printReport()
+url.close()
