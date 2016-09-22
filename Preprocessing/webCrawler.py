@@ -29,16 +29,27 @@ print "GSM arena webpage"
 driver.get("http://www.gsmarena.com/makers.php3")
 time.sleep(5)
 print "GSM Arena phone page"
+
 companylist = driver.find_elements_by_css_selector(".main-makers table td a")
-print len(companylist)
+totalCompanies = len(companylist)
 if len(companylist) == 0:
 	print "Phone list not found"
 allCompanyLink = list()
+allCompanyName = list()
+totalPhones = 0
 for td in companylist:
+	companyDetailList = td.text.split()
+	totalPhones += int(companyDetailList[len(companyDetailList) - 2])
 	a = td.get_attribute("href")
 	print a
 	allCompanyLink.append(a)
+	allCompanyName.append(companyDetailList[0])
+print "Total Phones : " + str(totalPhones)
+phonesDone = 0
+companiesDone = 0
 for CompanyLink in allCompanyLink:
+	currentCompany = allCompanyName[companiesDone]
+	companiesDone += 1
 	driver.get(CompanyLink)
 	try:
 		print "Going to company phone page"
@@ -47,8 +58,9 @@ for CompanyLink in allCompanyLink:
 	finally:
 		phoneList = driver.find_elements_by_css_selector(".makers a")
 		print len(phoneList)
-		phoneLinkList = list()
+		phoneLinkList = list()	
 		for phone in phoneList:
+			print "phone : " + phone.text
 			phoneLink = phone.get_attribute("href")
 			print phoneLink
 			phoneLinkList.append(phoneLink)
@@ -56,11 +68,19 @@ for CompanyLink in allCompanyLink:
 			driver.get(phoneLink)
 			time.sleep(5)
 			phoneName = driver.find_element_by_class_name("specs-phone-name-title")
-			print phoneName
+			print phoneName.text
 			specDiv = driver.find_element_by_id("specs-list")
 			tableList = specDiv.find_elements_by_xpath("//table")
-			print "Table List : \n\n"
-			print tableList
+			for individualTable in tableList:
+				tableHeader = individualTable.find_element_by_xpath("//th")
+				print "~ " + tableHeader.text + " ~"
+				divisionList = individualTable.find_elements_by_xpath("//tr")
+				for inDiv in divisionList:
+					title = inDiv.find_element_by_class_name("ttl")
+					details = inDiv.find_element_by_class_name("nfo")
+					print "& " + title.text + " # " + details.text + " &"
+
+
 
 		try:
 			driver.find_element_by_class_name("pages-next").click()
