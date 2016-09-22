@@ -10,27 +10,39 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
+from time import strftime, localtime
 
-urls = open("urls.txt","r+a")
+urls = open("urls.txt","a")
+logfile = open("crawler.log","a")
 
 def printReport(start,companyDone,phonesDone,totalPhones,totalCompanies):
+	logString = strftime("%Y-%m-%d %H:%M:%S", localtime())
+	logString += " >>"
 	elapsedTime = int((time.time() - start))
 	m, s = divmod(elapsedTime, 60)
 	h, m = divmod(m, 60)
+	logString += "\nTotal Elapsed Time : %d:%02d:%02d\n" % (h, m, s)
 	percentCompanies = 100*companiesDone/totalCompanies
 	percentPhones = 100*phonesDone/totalPhones
-	timeLeft = totalPhones * elapsedTime/phonesDone
+	timeLeft = 360000
+	if phonesDone > 0:
+		timeLeft = totalPhones * elapsedTime/phonesDone
 	timeLeft -= elapsedTime
-	print "\t\t\t FINAL REPORT : "
-	print "\n\n#####################################################################\n"
+	logString += "Companies Done : " + str(companiesDone)
+	logString += " & Phones Done : " + str(phonesDone)
+	logString += "\nPercent Companies Done : " + str(percentCompanies) + " %"
+	logString += " & Percent Phones Done : " + str(percentPhones) + " %\n\n"
+	logfile.write(logString)
+	print "\n\t\t\t FINAL REPORT : "
+	print "\n#####################################################################\n"
 	print "\tTotal Elapsed Time : %d:%02d:%02d" % (h, m, s)
-	print "\n\tCompanies Done : " + companiesDone
-	print "\n\tPhones Done" + phonesDone
-	print "\n\tPercent Companies Done" + percentCompanies + " %"
-	print "\n\tPercent Phones Done" + percentPhones + " %"
+	print "\tCompanies Done : " + str(companiesDone)
+	print "\tPhones Done : " + str(phonesDone)
+	print "\tPercent Companies Done : " + str(percentCompanies) + " %"
+	print "\tPercent Phones Done : " + str(percentPhones) + " %"
 	m, s = divmod(timeLeft, 60)
 	h, m = divmod(m, 60)
-	print "\n\tEstimated Time left : %d:%02d:%02d" % (h, m, s)
+	print "\tEstimated Time left : %d:%02d:%02d" % (h, m, s)
 	print "\n#####################################################################\n"	
 
 
@@ -70,28 +82,44 @@ for td in companylist:
 print "Total Phones : " + str(totalPhones)
 phonesDone = 0
 companiesDone = 0
+
+
+start = time.time()
+elapsedTime = 0
+flag = 0
+
 for CompanyLink in allCompanyLink:
-	currentCompany = allCompanyName[companiesDone]
-	companiesDone += 1
-	driver.get(CompanyLink)
+	if flag == 0:
+		currentCompany = allCompanyName[companiesDone]
+		companiesDone += 1
+		driver.get(CompanyLink)
 	try:
 		print "Going to company phone page"
 		element = WebDriverWait(driver, 10).until(EC.title_contains("All"))
 		time.sleep(10)
 	finally:
 		phoneList = driver.find_elements_by_css_selector(".makers a")
-		phonesDone = len(phoneList)
+		phonesDone += len(phoneList)
 		for phone in phoneList:
-			print "phone : " + phone.text
 			phoneLink = phone.get_attribute("href")
-			print phoneLink
-			urls.write("phoneLink")
+			writeToText = phoneLink + " " 
+			writeToText += currentCompany + " " + phone.text
+			print writeToText
+			urls.write(writeToText)
 			urls.write("\n")
-		try:
-			driver.find_element_by_class_name("pages-next").click()
-		except NoSuchElementException:
-			print "No next page"
-		except Exception:
-			print "Some Other exception occoured"
-	printReport()
+	try:
+		driver.find_element_by_class_name("pages-next").click()
+		flag = 1
+	except NoSuchElementException:
+		print "No next page"
+		flag = 0
+	except Exception:
+		print "Some Other exception occoured"
+		flag = 0
+	printReport(start,companiesDone,phonesDone,totalPhones,totalCompanies)
 url.close()
+
+
+
+
+
