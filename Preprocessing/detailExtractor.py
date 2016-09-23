@@ -48,32 +48,37 @@ for phoneLink in urls:
 	try:
 		phoneName = driver.find_element_by_class_name("specs-phone-name-title").text
 	except Exception:
+		print "Couldn't find Title"
 		continue
 	finalString += "{ company:\"" + companyName + "\", " + "phone:\"" + phoneName + "\", "
 	finalStringS += "{ \"company\":\"" + companyName + "\", " + "\"phone\":\"" + phoneName + "\", " 
 	specDiv = driver.find_element_by_id("specs-list")
 	tableList = specDiv.find_elements_by_xpath("//table")
 	individualTable = tableList[0]
-	try:
-		tableHeader = individualTable.find_element_by_xpath("//th").text
-	except Exception:
-		continue
-	divisionList = individualTable.find_elements_by_xpath("//tr")
+	divisionList = individualTable.find_elements_by_xpath("//tr")			# find all <tr> in the webpage
+	titleList = []				
 	for inDiv in divisionList:
 		try:
 			title = inDiv.find_element_by_class_name("ttl").text
+			if title in titleList:											# prevent duplicates in JSON String
+				# print "Found"
+				continue
+			titleList.append(title)
 			details = inDiv.find_element_by_class_name("nfo").text
 			if title != "" and details != "" and title != " " and details != " ":
-				finalString += title + ":\"" + details + "\", "
+				finalString += title + ":\"" + details + "\", "				# adding things to JSON string
 				finalStringS += "\"" + title + "\":\"" + details + "\", "
 		except Exception:
+			print "Exception here"
 			continue
-		
-	finalS = finalString.replace("\n","").replace("\r","") + "},\n"
+
+	if finalString[-2:-1] == ',':											# removing last , to get a valid JSON string
+		finalString = finalString[0:-2]
+		finalStringS = finalStringS[0:-2]
+	finalS = finalString.replace("\n","").replace("\r","") + "},\n"			# terminating JSON and removing escape charecters
 	finalSS = finalStringS.replace("\n","").replace("\r","") + "},\n"
 	phoneDetails.write(finalS)
 	phoneDetailsJSON.write(finalSS)
 	# print finalString
 phoneDetails.write("]")
 phoneDetailsJSON.write("]")
-
