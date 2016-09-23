@@ -77,8 +77,7 @@ for td in companylist:
 	totalPhones += int(companyDetailList[len(companyDetailList) - 2])
 	a = td.get_attribute("href")
 	print a
-	allCompanyLink.append(a)
-	allCompanyName.append(companyDetailList[0])
+	allCompanyLink.append([a,companyDetailList[0]])
 print "Total Phones : " + str(totalPhones)
 phonesDone = 0
 companiesDone = 0
@@ -86,40 +85,38 @@ companiesDone = 0
 
 start = time.time()
 elapsedTime = 0
-flag = 0
+hasNext = 0
 
-for CompanyLink in allCompanyLink:
-	if flag == 0:
-		currentCompany = allCompanyName[companiesDone]
+for Company in allCompanyLink:
+	if !hasNext:
+		CompanyLink = Company[0]
+		currentCompany = Company[1]
 		companiesDone += 1
+		hasNext = 1
 		driver.get(CompanyLink)
-	try:
-		print "Going to company phone page"
-		element = WebDriverWait(driver, 10).until(EC.title_contains("All"))
-		time.sleep(10)
-	finally:
-		phoneList = driver.find_elements_by_css_selector(".makers a")
-		phonesDone += len(phoneList)
-		for phone in phoneList:
-			phoneLink = phone.get_attribute("href")
-			writeToText = phoneLink + " " 
-			writeToText += currentCompany + " " + phone.text
-			print writeToText
-			urls.write(writeToText)
-			urls.write("\n")
-	try:
-		driver.find_element_by_class_name("pages-next").click()
-		flag = 1
-	except NoSuchElementException:
-		print "No next page"
-		flag = 0
-	except Exception:
-		print "Some Other exception occoured"
-		flag = 0
-	printReport(start,companiesDone,phonesDone,totalPhones,totalCompanies)
-url.close()
-
-
-
-
-
+	while hasNext:
+		try:
+			print "Going to company phone page"
+			element = WebDriverWait(driver, 10).until(EC.title_contains("All"))
+			time.sleep(10)
+		finally:
+			phoneList = driver.find_elements_by_css_selector(".makers a")
+			phonesDone += len(phoneList)
+			for phone in phoneList:
+				phoneLink = phone.get_attribute("href")
+				writeToText = phoneLink + " " 
+				writeToText += currentCompany + " " + phone.text
+				print writeToText
+				urls.write(writeToText)
+				urls.write("\n")
+		try:
+			driver.find_element_by_class_name("pages-next").click()
+			hasNext = 1
+		except NoSuchElementException:
+			print "No next page"
+			hasNext = 0
+		except Exception:
+			print "Some Other exception occoured"
+			hasNext = 0
+		printReport(start,companiesDone,phonesDone,totalPhones,totalCompanies)
+urls.close()
