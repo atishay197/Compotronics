@@ -28,14 +28,14 @@ print "OS environment set"
 driver = webdriver.Chrome(chromedriver)
 print "Launching chrome"
 
-phoneDetails.write("[\n")
-phoneDetailsJSON.write("[\n")
+# phoneDetails.write("[\n")
+# phoneDetailsJSON.write("[\n")
 phoneDone = 0
 totalPhones = sum(1 for line in url)
 
 for phoneLink in urls:
 	phoneDone += 1
-	per = phoneDone/totalPhones
+	per = 100*phoneDone/totalPhones
 	print str(phoneDone) + " done out of " + str(totalPhones) + " ::: " + str(per) + " %"
 	finalString = ""
 	finalStringS = ""
@@ -77,8 +77,12 @@ for phoneLink in urls:
 		finalStringS = finalStringS[0:-2]
 	finalS = finalString.replace("\n","").replace("\r","") + "},\n"			# terminating JSON and removing escape charecters
 	finalSS = finalStringS.replace("\n","").replace("\r","") + "},\n"
-	phoneDetails.write(finalS)
-	phoneDetailsJSON.write(finalSS)
+	try:
+		phoneDetails.write(finalS)
+		phoneDetailsJSON.write(finalSS)
+	except Exception:
+		print "File writing exception"
+		continue
 	# print finalString
 phoneDetails.write("]")
 phoneDetailsJSON.write("]")
