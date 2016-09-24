@@ -12,7 +12,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from time import strftime, localtime
 
-urls = open("urls.txt","a")
+urls = open("urlGathered.txt","a")
 logfile = open("crawler.log","a")
 
 def printReport(start,companyDone,phonesDone,totalPhones,totalCompanies):

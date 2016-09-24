@@ -12,8 +12,8 @@ from time import strftime, localtime
 
 urls = open("urlGathered.txt","r")
 url = open("urlGathered.txt","r")
-phoneDetails = open("phoneDetails.txt","a")
-phoneDetailsJSON = open("phoneDetailJSON.txt","a")
+phoneDetails = open("phoneDetails.json","a")
+phoneDetailsJSON = open("phoneDetailJSON.json","a")
 
 
 myPath = os.path.realpath(__file__)
