@@ -22,6 +22,8 @@ print "Success" + str(successNumber) + " Errors : " + str(totalError)
 sqlQueryList = list()
 curJson = 0
 keylist = list()
+keylist2 = list()
+finalList = list()
 statementList = list()
 for individualJSON in jsonList:
 	for key in individualJSON:
@@ -29,6 +31,20 @@ for individualJSON in jsonList:
 		key = key.replace(" ","_")
 		if key not in keylist and key != "3.5mm_jack":
 			keylist.append(key)
+		keylist2.append(keylist)
+
+curList = keylist[0]
+
+for keylist in keylist2:
+	for key in keylist:
+		if key not in curList:
+			print key
+			finalList.append(key)
+	curList = keylist
+
+print finalList
+
+
 
 for individualJSON in jsonList:
 	curJson += 1
@@ -46,7 +62,7 @@ for individualJSON in jsonList:
 	values.strip(",")
 	statement = "INSERT INTO PhoneTablet (" + columns + ") VALUES (" + values + ");\n"
 	statementList.append(statement)
-	print statement
+	# print statement
 
 create = "CREATE TABLE PhoneTablet\n(\n"
 create += "id int NOT NULL AUTO_INCREMENT,\n"
