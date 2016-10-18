@@ -58,8 +58,8 @@ for individualJSON in jsonList:
 			keys = keys.replace(" ","_")
 			columns += keys + ","
 			values += "\'" + value + "\',"
-	columns.strip(",")
-	values.strip(",")
+	columns = columns.replace(","," ")
+	values = values.strip(","," ")
 	statement = "INSERT INTO PhoneTablet (" + columns + ") VALUES (" + values + ");\n"
 	statementList.append(statement)
 	# print statement
@@ -72,3 +72,4 @@ create += "PRIMARY KEY (id)\n)\n\n"
 sqlFile.write(create) 
 for statement in statementList:
 	sqlFile.write(statement)
+
