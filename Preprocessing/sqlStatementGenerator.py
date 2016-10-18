@@ -1,7 +1,7 @@
 import json
 
 fileCheck = open("phoneDetailJSON.json","r")
-sqlFile = open("tableCreation.sql","a")
+sqlFile = open("tableCreation.sql","w")
 
 number = 0
 successNumber = 0
@@ -59,7 +59,7 @@ for individualJSON in jsonList:
 			columns += keys + ","
 			values += "\'" + value + "\',"
 	columns = columns.replace(","," ")
-	values = values.strip(","," ")
+	values = values.replace(","," ")
 	statement = "INSERT INTO PhoneTablet (" + columns + ") VALUES (" + values + ");\n"
 	statementList.append(statement)
 	# print statement
