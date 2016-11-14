@@ -41,11 +41,21 @@
             </asp:RadioButtonList>
             
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FEATURE SET ANALYSIS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FEATURE TRENDS ANALYSIS<br />
-            <asp:Image ID="Image2" runat="server" Height="234px" Width="713px" />
-            <asp:Image ID="Image3" runat="server" Height="234px" Width="713px" />
+            <asp:Image ID="Image2" runat="server" Height="234px" Width="703px" />
+            <asp:Image ID="Image3" runat="server" Height="234px" Width="703px" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <br />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME ANALYSIS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SALES ANALYSIS&nbsp;<br /> &nbsp; Year Wise Analysis :&nbsp;
+          
+            <input type="range" min="2007" max="2016" value="2007" onchange="showValue(this.value)" />
+            <span id="range">2007</span>
+            <script type="text/javascript">
+            function showValue(newValue) {
+                document.getElementById("range").innerHTML = newValue;
+                Image4.src = newValue + ".png";
+            }
+            </script>
+            <!--
             <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged" style="margin-bottom: 0px">
                 <asp:ListItem>Select Year</asp:ListItem>
                 <asp:ListItem>2007</asp:ListItem>
@@ -59,7 +69,17 @@
                 <asp:ListItem>2015</asp:ListItem>
                 <asp:ListItem>2016</asp:ListItem>
             </asp:DropDownList>
+            -->
+            <input type="range" min="1" max="4" value="1" onchange="showValue1(this.value)" />
+            <span id="Span1">1</span>
+            <script type="text/javascript">
+                function showValue1(newValue) {
+                    document.getElementById("Span1").innerHTML = newValue;
+                    Image4.src = newValue + ".png";
+                }
+            </script>
             &nbsp;<span>Quarter Wise Analysis </span><span class="auto-style4">:&nbsp; </span>
+            <!--
             <asp:DropDownList ID="DropDownList3" runat="server" AutoPostBack="True" CssClass="auto-style4" OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged">
                 <asp:ListItem>Select Quarter</asp:ListItem>
                 <asp:ListItem>First</asp:ListItem>
@@ -67,6 +87,7 @@
                 <asp:ListItem>Third</asp:ListItem>
                 <asp:ListItem>Fourth</asp:ListItem>
             </asp:DropDownList>
+            -->
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Select Feature :
             <asp:DropDownList ID="DropDownList4" runat="server" OnSelectedIndexChanged="DropDownList4_SelectedIndexChanged" AutoPostBack="true">
                 <asp:ListItem>Select</asp:ListItem>
@@ -76,8 +97,8 @@
                 <asp:ListItem>Total</asp:ListItem>
             </asp:DropDownList>
             <br />
-            <asp:Image ID="Image4" runat="server" Height="231px" Width="713px" />
-            <asp:Image ID="Image5" runat="server" Height="231px" Width="713px" />
+            <asp:Image ID="Image4" runat="server" Height="231px" Width="703px" ImageUrl="~/2007.png" />
+            <asp:Image ID="Image5" runat="server" Height="231px" Width="703px" />
             <br class="auto-style4" />
             <span class="auto-style4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
             <br />

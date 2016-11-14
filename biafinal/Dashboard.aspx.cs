@@ -67,9 +67,9 @@ public partial class Dashboard : System.Web.UI.Page
     protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (DropDownList1.SelectedItem.Text == "2007")
-            Image4.ImageUrl = "yr7.png";
+            Image4.ImageUrl = "2007.png";
         else if (DropDownList1.SelectedItem.Text == "2008")
-            Image4.ImageUrl = "yr8.png";
+            Image4.ImageUrl = "2008.png";
         else if (DropDownList1.SelectedItem.Text == "2009")
             Image4.ImageUrl = "2009.png";
         else if (DropDownList1.SelectedItem.Text == "2010")
@@ -89,13 +89,13 @@ public partial class Dashboard : System.Web.UI.Page
     protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (DropDownList3.SelectedItem.Text == "First")
-            Image4.ImageUrl = "1st.png";
+            Image4.ImageUrl = "1.png";
         else if (DropDownList3.SelectedItem.Text == "Second")
-            Image4.ImageUrl = "2nd.png";
+            Image4.ImageUrl = "2.png";
         else if (DropDownList3.SelectedItem.Text == "Third")
-            Image4.ImageUrl = "3rd.png";
+            Image4.ImageUrl = "3.png";
         else if (DropDownList3.SelectedItem.Text == "Fourth")
-            Image4.ImageUrl = "4th.png";
+            Image4.ImageUrl = "4.png";
     }
     
     protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
